@@ -39,9 +39,14 @@ $videolist = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     <ul class="videos__container" alt="videos alura">
         <?php foreach ($videolist as $video): ?>
-        <?php if(str_starts_with($video["url"], needle:"http")): ?>
+        <?php 
+            if(!str_starts_with($video["url"], needle:"http")) {
+                $video["url"] = "https://www.youtube.com/embed/qJxk1leG1wY";
+            }
+        
+        ?>
         <li class="videos__item">
-            <iframe width="100%" height="72%" src="<?php echo $video["url"] ?>"
+            <iframe width="100%" height="72%" src="<?= $video["url"] ?>"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
@@ -50,11 +55,10 @@ $videolist = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                 <h3><?= $video["title"] ?></h3>
                 <div class="acoes-video">
                     <a href="./pages/enviar-video.html">Editar</a>
-                    <a href="./pages/enviar-video.html">Excluir</a>
+                    <a href="./remover-video.php?id=<?= $video["id"];?>">Excluir</a>
                 </div>
             </div>
         </li>
-        <?php endif; ?>
         <?php endforeach; ?>
     </ul>
 </body>
