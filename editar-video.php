@@ -6,16 +6,16 @@
     $title = filter_input(INPUT_POST, "titulo");
 
     if($url === false) {
-        header("Location: ./index.php?sucesso=0");
+        header("Location: /?sucesso=0");
         exit();
     }
     if($title === false) {
-        header("Location: ./index.php?sucesso=0");
+        header("Location: /?sucesso=0");
         exit();
     }
 
-    if($id === false) {
-        header("Location: ./index.php?sucesso=0");
+    if($id === false && $id === null) {
+        header("Location: /?sucesso=0");
         exit();
     }
 
@@ -25,7 +25,7 @@
     $stmt->bindParam(":url", $url);
     $stmt->bindParam(":title", $title);
     if( $stmt->execute() === false) {
-        header("Location: ./index.php?sucesso=0");
+        header("Location: /?sucesso=0");
     } else {
-        header("Location: ./index.php?sucesso=1");
+        header("Location: /?sucesso=1");
     }
