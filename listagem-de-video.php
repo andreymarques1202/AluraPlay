@@ -1,12 +1,10 @@
 <?php
-require_once "./connect.php";
-$query = "SELECT * FROM videos";
-$stmt = $connect->prepare($query);
-$stmt->execute();
+$dbPath = __DIR__ . '/banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
+$videolist = $pdo->query('SELECT * FROM videos;')->fetchAll(\PDO::FETCH_ASSOC);
 
-$videolist = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    require_once __DIR__ . "../inicio-html.php";
 
-    require_once "./inicio-html.php";
 ?>
 
     <ul class="videos__container" alt="videos alura">

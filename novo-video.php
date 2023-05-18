@@ -1,7 +1,7 @@
 <?php
 
-require_once "./connect.php";
-
+$dbPath = __DIR__ . '/banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
 
 $url = filter_input(INPUT_POST, "url", FILTER_VALIDATE_URL);
 $title = filter_input(INPUT_POST, "titulo");
@@ -17,7 +17,7 @@ if($title === false) {
 
 $query = "INSERT INTO videos (url, title) VALUES (:url, :title)";
 
-$stmt = $connect->prepare($query);
+$stmt = $pdo->prepare($query);
 
 $stmt->bindParam(":url", $url);
 $stmt->bindParam(":title", $title);

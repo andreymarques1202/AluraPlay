@@ -1,23 +1,21 @@
 <?php
-require_once "./connect.php";
-$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-$video = [
-    "url" => "",
-    "title" => ""
-];
+$dbPath = __DIR__ . '/banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
 
-if($id !== false && $id !== null) {
-    $query = "SELECT * FROM videos WHERE id = :id";
-    $stmt = $connect->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $video = $stmt->fetch(\PDO::FETCH_ASSOC);
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$video = [
+    'url' => '',
+    'title' => '',
+];
+if ($id !== false && $id !== null) {
+    $statement = $pdo->prepare('SELECT * FROM videos WHERE id = ?;');
+    $statement->bindValue(1, $id, PDO::PARAM_INT);
+    $statement->execute();
+    $video = $statement->fetch(\PDO::FETCH_ASSOC);
 }
 
 
-
-
-require_once "./inicio-html.php";
+require_once __DIR__ . "../inicio-html.php";
 
 ?>
 
