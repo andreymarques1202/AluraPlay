@@ -1,4 +1,7 @@
 <?php
+
+use Alura\Mvc\Repository\VideoRepository;
+
     $dbPath = __DIR__ . '/banco.sqlite';
     $pdo = new PDO("sqlite:$dbPath");
     
@@ -7,7 +10,10 @@
     $query = "DELETE FROM videos WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
-    if( $stmt->execute() === false) {
+
+    $repository = new VideoRepository($pdo);
+    
+    if($repository->remove($id) === false) {
         header("Location: /?sucesso=0");
     } else {
         header("Location: /?sucesso=1");
