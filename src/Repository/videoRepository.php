@@ -55,12 +55,9 @@ class VideoRepository {
         $videolist = $this->pdo->query('SELECT * FROM videos;')->fetchAll(PDO::FETCH_ASSOC);
 
 
-        return array_map(function (array $videoData) {
-            $video = new Video($videoData["url"], $videoData["title"]);
-            $video->setId($videoData["id"]);
-
-            return $video;
-        }, $videolist);
+        return array_map(
+            $this->hydrateVideo(...), 
+            $videolist);
     }
 
     public function find(int $id) {
